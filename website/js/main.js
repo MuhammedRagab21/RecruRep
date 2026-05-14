@@ -4,17 +4,17 @@
   /* ---- Supabase ---- */
   const SUPABASE_URL = 'https://hvynpslokgslpmekqwmg.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh2eW5wc2xva2dzbHBtZWtxd21nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NjQwMjgsImV4cCI6MjA5NDM0MDAyOH0.ZlwsneuKHDEeYHNktEqq15Sk-iZt-vQsOeGMHXggbK0';
-  var supabase = null;
-  if (typeof supabaseClient !== 'undefined') {
-    supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_KEY);
+  var sb = null;
+  if (typeof supabase !== 'undefined' && supabase.createClient) {
+    sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   }
 
   /* ---- Load Sample Jobs from Supabase ---- */
   function loadJobs() {
     var grid = document.getElementById('listingsGrid');
-    if (!grid || !supabase) return;
+    if (!grid || !sb) return;
 
-    supabase
+    sb
       .from('jobs')
       .select('*')
       .order('created_at', { ascending: false })
@@ -57,9 +57,9 @@
   /* ---- Count Signups & Update Spot Counter ---- */
   function loadSpotCount() {
     var spotEl = document.getElementById('spotCount');
-    if (!spotEl || !supabase) return;
+    if (!spotEl || !sb) return;
 
-    supabase
+    sb
       .from('waitlist')
       .select('id', { count: 'exact', head: true })
       .then(function (result) {
@@ -186,8 +186,8 @@
       submitBtn.textContent = 'Opening checkout...';
 
       // Insert into Supabase waitlist directly
-      if (supabase) {
-        supabase
+      if (sb) {
+        sb
           .from('waitlist')
           .insert({ name: name, email: email })
           .then(function (result) {
