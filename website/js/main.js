@@ -23,7 +23,7 @@
       }
     });
   } else {
-    document.querySelector('.theme-btn[data-theme="earth"]').classList.add('is-active');
+    document.querySelector('.theme-btn[data-theme="slate"]').classList.add('is-active');
   }
 
   themeBtns.forEach(function (btn) {

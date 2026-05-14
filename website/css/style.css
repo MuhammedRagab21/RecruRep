@@ -3,22 +3,22 @@
    Color themes are at the bottom as [data-theme="..."] overrides.
    ========================================================================== */
 
-/* --- CSS Custom Properties / Default Theme (Earth Dark) --- */
+/* --- CSS Custom Properties / Default Theme (Slate — blue-grey) --- */
 :root {
-  --color-canvas: #0d0b08;
-  --color-canvas-soft: #161310;
-  --color-surface: #1a1612;
-  --color-surface-card: #14110e;
-  --color-primary: #c8654a;
-  --color-primary-soft: #d9826a;
-  --color-primary-deep: #a84d35;
+  --color-canvas: #080c12;
+  --color-canvas-soft: #0e141e;
+  --color-surface: #121a26;
+  --color-surface-card: #0e1620;
+  --color-primary: #2a6aaa;
+  --color-primary-soft: #4a8aca;
+  --color-primary-deep: #1a4a7a;
   --color-on-primary: #ffffff;
-  --color-ink: #e8ddd0;
-  --color-ink-strong: #f5f0ea;
-  --color-body: #a09080;
-  --color-mute: #706050;
-  --color-hairline: #2a2420;
-  --color-accent: #7a8a5e;
+  --color-ink: #d0d8e2;
+  --color-ink-strong: #eaeef6;
+  --color-body: #8898a8;
+  --color-mute: #586878;
+  --color-hairline: #1c2634;
+  --color-accent: #4a8aca;
 
   --font-sans: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
@@ -42,76 +42,76 @@
   --max-width-narrow: 700px;
 }
 
-/* --- Ocean Dark --- */
-[data-theme="ocean"] {
-  --color-canvas: #080c10;
-  --color-canvas-soft: #0e141a;
-  --color-surface: #121a22;
-  --color-surface-card: #0e141c;
+/* --- Ash — warm brown-grey, earthy contrast to navy --- */
+[data-theme="ash"] {
+  --color-canvas: #0e0c0a;
+  --color-canvas-soft: #161412;
+  --color-surface: #1c1a18;
+  --color-surface-card: #141210;
   --color-primary: #2a6aaa;
   --color-primary-soft: #4a8aca;
   --color-primary-deep: #1a4a7a;
   --color-on-primary: #ffffff;
-  --color-ink: #d0dce8;
-  --color-ink-strong: #edf2f8;
-  --color-body: #8898a8;
-  --color-mute: #5a6a7a;
-  --color-hairline: #1c2630;
-  --color-accent: #3a9a9a;
+  --color-ink: #d4ccc4;
+  --color-ink-strong: #eeeae4;
+  --color-body: #8c8478;
+  --color-mute: #645c54;
+  --color-hairline: #242220;
+  --color-accent: #4a8aca;
 }
 
-/* --- Sunset Dark --- */
-[data-theme="sunset"] {
-  --color-canvas: #0d0a08;
-  --color-canvas-soft: #16120e;
-  --color-surface: #1c1814;
-  --color-surface-card: #14120e;
-  --color-primary: #d4893a;
-  --color-primary-soft: #e0a05a;
-  --color-primary-deep: #b87020;
+/* --- Smoke — neutral pure grey, balanced --- */
+[data-theme="smoke"] {
+  --color-canvas: #0a0c0e;
+  --color-canvas-soft: #101214;
+  --color-surface: #14161a;
+  --color-surface-card: #0e1014;
+  --color-primary: #2a6aaa;
+  --color-primary-soft: #4a8aca;
+  --color-primary-deep: #1a4a7a;
   --color-on-primary: #ffffff;
-  --color-ink: #e8ddd0;
-  --color-ink-strong: #f5f0ea;
-  --color-body: #a0907a;
-  --color-mute: #706050;
-  --color-hairline: #2a2420;
-  --color-accent: #8a5a6a;
+  --color-ink: #ccced0;
+  --color-ink-strong: #eaecee;
+  --color-body: #848688;
+  --color-mute: #5c5e60;
+  --color-hairline: #1c1e22;
+  --color-accent: #4a8aca;
 }
 
-/* --- Fresh Dark --- */
-[data-theme="fresh"] {
-  --color-canvas: #0a0e0a;
-  --color-canvas-soft: #101610;
-  --color-surface: #161e16;
-  --color-surface-card: #101810;
-  --color-primary: #5a8a4a;
-  --color-primary-soft: #7aaa6a;
-  --color-primary-deep: #3a6a30;
+/* --- Frost — bright cool grey, highest contrast --- */
+[data-theme="frost"] {
+  --color-canvas: #06080c;
+  --color-canvas-soft: #0c1018;
+  --color-surface: #141a24;
+  --color-surface-card: #0e141e;
+  --color-primary: #2a6aaa;
+  --color-primary-soft: #4a8aca;
+  --color-primary-deep: #1a4a7a;
   --color-on-primary: #ffffff;
-  --color-ink: #d8e0d0;
-  --color-ink-strong: #edf2ea;
-  --color-body: #88987a;
-  --color-mute: #5a6a50;
-  --color-hairline: #1e261e;
-  --color-accent: #a0b88a;
+  --color-ink: #d8dee8;
+  --color-ink-strong: #f0f2f8;
+  --color-body: #9098a8;
+  --color-mute: #606878;
+  --color-hairline: #1e2430;
+  --color-accent: #4a8aca;
 }
 
-/* --- Passport Dark --- */
-[data-theme="passport"] {
-  --color-canvas: #0a080a;
-  --color-canvas-soft: #141016;
-  --color-surface: #1a1620;
-  --color-surface-card: #141018;
-  --color-primary: #8a4a5a;
-  --color-primary-soft: #a86a7a;
-  --color-primary-deep: #6a2a3a;
+/* --- Graphite — deepest, moodiest, dramatic --- */
+[data-theme="graphite"] {
+  --color-canvas: #060808;
+  --color-canvas-soft: #0c0e0e;
+  --color-surface: #101212;
+  --color-surface-card: #0c0e0e;
+  --color-primary: #2a6aaa;
+  --color-primary-soft: #4a8aca;
+  --color-primary-deep: #1a4a7a;
   --color-on-primary: #ffffff;
-  --color-ink: #e0d8e0;
-  --color-ink-strong: #f0eaf0;
-  --color-body: #9a889a;
-  --color-mute: #6a5a6a;
-  --color-hairline: #28222a;
-  --color-accent: #c8a84a;
+  --color-ink: #bebebe;
+  --color-ink-strong: #dcdcdc;
+  --color-body: #727272;
+  --color-mute: #4a4a4a;
+  --color-hairline: #181a1a;
+  --color-accent: #4a8aca;
 }
 
 /* --- Reset --- */
@@ -427,7 +427,7 @@ ul { list-style: none; }
 .text-input::placeholder { color: var(--color-mute); }
 .text-input--select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23706050' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23586878' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 16px center;
   padding-right: var(--spacing-4xl); cursor: pointer;
 }
