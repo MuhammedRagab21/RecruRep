@@ -2,8 +2,8 @@
   'use strict';
 
   /* ---- Supabase REST (direct fetch, no client library needed) ---- */
-  const SUPABASE_URL = 'https://hvynpslokgslpmekqwmg.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh2eW5wc2xva2dzbHBtZWtxd21nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NjQwMjgsImV4cCI6MjA5NDM0MDAyOH0.ZlwsneuKHDEeYHNktEqq15Sk-iZt-vQsOeGMHXggbK0';
+  var SUPABASE_URL = 'https://hvynpslokgslpmekqwmg.supabase.co';
+  var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh2eW5wc2xva2dzbHBtZWtxd21nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NjQwMjgsImV4cCI6MjA5NDM0MDAyOH0.ZlwsneuKHDEeYHNktEqq15Sk-iZt-vQsOeGMHXggbK0';
   var sbHeaders = {
     'apikey': SUPABASE_KEY,
     'Authorization': 'Bearer ' + SUPABASE_KEY,
@@ -21,7 +21,6 @@
   function loadJobs() {
     var grid = document.getElementById('listingsGrid');
     if (!grid) return;
-
     sbFetch('GET', 'jobs?select=*&order=created_at.desc&limit=4')
       .then(function (data) {
         if (!data || !data.length) {
@@ -55,17 +54,15 @@
   function loadSpotCount() {
     var spotEl = document.getElementById('spotCount');
     if (!spotEl) return;
-
     fetch(SUPABASE_URL + '/rest/v1/waitlist?id=select:count&limit=0', {
       headers: sbHeaders
     }).then(function (r) { return r.json(); })
     .then(function (data) {
       var count = data.length || 0;
       var remaining = Math.max(0, 15 - count);
-      spotEl.textContent = '\u2014 only ' + remaining + ' of 15 beta spots left';
-      if (remaining <= 0) {
-        spotEl.textContent = '\u2014 beta is full. Join the waitlist for the public launch.';
-      }
+      spotEl.textContent = remaining > 0
+        ? '\u2014 only ' + remaining + ' of 15 beta spots left'
+        : '\u2014 beta is full. Join the waitlist for the public launch.';
     });
   }
 
@@ -134,12 +131,29 @@
     document.querySelectorAll('.fade-in').forEach(function (el) { el.classList.add('is-visible'); });
   }
 
-  /* ---- Waitlist Form ---- */
+  /* ---- Handle Payment Result on Page Load ---- */
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('payment') === 'success') {
+    var successForm = document.getElementById('waitlistForm');
+    var successMsg = document.getElementById('waitlistSuccess');
+    if (successForm && successMsg) {
+      successForm.style.display = 'none';
+      successMsg.classList.add('is-visible');
+      loadSpotCount();
+    }
+  } else if (params.get('payment') === 'cancelled') {
+    var notice = document.getElementById('cancelledNotice');
+    if (notice) { notice.style.display = 'block'; }
+    if (window.history.replaceState) {
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }
+
+  /* ---- Waitlist Form (Stripe Checkout) ---- */
   var form = document.getElementById('waitlistForm');
-  var success = document.getElementById('waitlistSuccess');
   var submitBtn = document.getElementById('waitlistSubmit');
 
-  if (form && success) {
+  if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var name = document.getElementById('name').value.trim();
@@ -151,20 +165,28 @@
       if (!country) { alert('Please select your country.'); return; }
 
       submitBtn.classList.add('btn--loading');
-      submitBtn.textContent = 'Signing up...';
+      submitBtn.textContent = 'Opening checkout...';
 
-      sbFetch('POST', 'waitlist', { name: name, email: email, country: country })
-        .then(function (result) {
-          submitBtn.classList.remove('btn--loading');
-          submitBtn.textContent = 'Get Beta Access \u2014 $1';
-          form.style.display = 'none';
-          success.classList.add('is-visible');
-          loadSpotCount();
+      fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, email: email, country: country }),
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Server error');
+          return res.json();
+        })
+        .then(function (data) {
+          if (data.url) {
+            window.location.href = data.url;
+          } else {
+            throw new Error('No checkout URL');
+          }
         })
         .catch(function () {
           submitBtn.classList.remove('btn--loading');
           submitBtn.textContent = 'Get Beta Access \u2014 $1';
-          alert('Something went wrong. Please try again.');
+          alert('Could not connect to payment. Please try again.');
         });
     });
   }
