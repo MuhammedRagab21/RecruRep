@@ -5,19 +5,19 @@
 
 /* --- CSS Custom Properties / Default Theme (Slate — blue-grey) --- */
 :root {
-  --color-canvas: #080c12;
-  --color-canvas-soft: #0e141e;
-  --color-surface: #121a26;
-  --color-surface-card: #0e1620;
+  --color-canvas: #e8eaed;
+  --color-canvas-soft: #e0e2e6;
+  --color-surface: #f0f2f4;
+  --color-surface-card: #e4e6ea;
   --color-primary: #2a6aaa;
   --color-primary-soft: #4a8aca;
   --color-primary-deep: #1a4a7a;
   --color-on-primary: #ffffff;
-  --color-ink: #d0d8e2;
-  --color-ink-strong: #eaeef6;
-  --color-body: #8898a8;
-  --color-mute: #586878;
-  --color-hairline: #1c2634;
+  --color-ink: #202428;
+  --color-ink-strong: #101418;
+  --color-body: #505458;
+  --color-mute: #888c90;
+  --color-hairline: #d0d2d6;
   --color-accent: #4a8aca;
 
   --font-sans: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -44,73 +44,73 @@
 
 /* --- Ash — warm brown-grey, earthy contrast to navy --- */
 [data-theme="ash"] {
-  --color-canvas: #0e0c0a;
-  --color-canvas-soft: #161412;
-  --color-surface: #1c1a18;
-  --color-surface-card: #141210;
+  --color-canvas: #e8e4df;
+  --color-canvas-soft: #e0dcd7;
+  --color-surface: #f0ece7;
+  --color-surface-card: #e4e0db;
   --color-primary: #2a6aaa;
   --color-primary-soft: #4a8aca;
   --color-primary-deep: #1a4a7a;
   --color-on-primary: #ffffff;
-  --color-ink: #d4ccc4;
-  --color-ink-strong: #eeeae4;
-  --color-body: #8c8478;
-  --color-mute: #645c54;
-  --color-hairline: #242220;
+  --color-ink: #282420;
+  --color-ink-strong: #161410;
+  --color-body: #585450;
+  --color-mute: #888480;
+  --color-hairline: #d0ccc8;
   --color-accent: #4a8aca;
 }
 
 /* --- Smoke — neutral pure grey, balanced --- */
 [data-theme="smoke"] {
-  --color-canvas: #0a0c0e;
-  --color-canvas-soft: #101214;
-  --color-surface: #14161a;
-  --color-surface-card: #0e1014;
+  --color-canvas: #e8e8e8;
+  --color-canvas-soft: #e0e0e0;
+  --color-surface: #f0f0f0;
+  --color-surface-card: #e4e4e4;
   --color-primary: #2a6aaa;
   --color-primary-soft: #4a8aca;
   --color-primary-deep: #1a4a7a;
   --color-on-primary: #ffffff;
-  --color-ink: #ccced0;
-  --color-ink-strong: #eaecee;
-  --color-body: #848688;
-  --color-mute: #5c5e60;
-  --color-hairline: #1c1e22;
+  --color-ink: #262626;
+  --color-ink-strong: #141414;
+  --color-body: #565656;
+  --color-mute: #868686;
+  --color-hairline: #cecece;
   --color-accent: #4a8aca;
 }
 
 /* --- Frost — bright cool grey, highest contrast --- */
 [data-theme="frost"] {
-  --color-canvas: #06080c;
-  --color-canvas-soft: #0c1018;
-  --color-surface: #141a24;
-  --color-surface-card: #0e141e;
+  --color-canvas: #eceef0;
+  --color-canvas-soft: #e4e6e8;
+  --color-surface: #f4f6f8;
+  --color-surface-card: #e8eaec;
   --color-primary: #2a6aaa;
   --color-primary-soft: #4a8aca;
   --color-primary-deep: #1a4a7a;
   --color-on-primary: #ffffff;
-  --color-ink: #d8dee8;
-  --color-ink-strong: #f0f2f8;
-  --color-body: #9098a8;
-  --color-mute: #606878;
-  --color-hairline: #1e2430;
+  --color-ink: #1e2226;
+  --color-ink-strong: #0e1216;
+  --color-body: #4e5256;
+  --color-mute: #868a8e;
+  --color-hairline: #d0d2d6;
   --color-accent: #4a8aca;
 }
 
 /* --- Graphite — deepest, moodiest, dramatic --- */
 [data-theme="graphite"] {
-  --color-canvas: #060808;
-  --color-canvas-soft: #0c0e0e;
-  --color-surface: #101212;
-  --color-surface-card: #0c0e0e;
+  --color-canvas: #d6d6d6;
+  --color-canvas-soft: #cccccc;
+  --color-surface: #e0e0e0;
+  --color-surface-card: #d4d4d4;
   --color-primary: #2a6aaa;
   --color-primary-soft: #4a8aca;
   --color-primary-deep: #1a4a7a;
   --color-on-primary: #ffffff;
-  --color-ink: #bebebe;
-  --color-ink-strong: #dcdcdc;
-  --color-body: #727272;
-  --color-mute: #4a4a4a;
-  --color-hairline: #181a1a;
+  --color-ink: #1a1a1a;
+  --color-ink-strong: #0a0a0a;
+  --color-body: #4a4a4a;
+  --color-mute: #7a7a7a;
+  --color-hairline: #c0c0c0;
   --color-accent: #4a8aca;
 }
 
@@ -427,7 +427,7 @@ ul { list-style: none; }
 .text-input::placeholder { color: var(--color-mute); }
 .text-input--select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23586878' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888c90' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 16px center;
   padding-right: var(--spacing-4xl); cursor: pointer;
 }
