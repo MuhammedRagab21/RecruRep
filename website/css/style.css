@@ -42,77 +42,7 @@
   --max-width-narrow: 700px;
 }
 
-/* --- Ash — warm brown-grey, earthy contrast to navy --- */
-[data-theme="ash"] {
-  --color-canvas: #e8e4df;
-  --color-canvas-soft: #e0dcd7;
-  --color-surface: #f0ece7;
-  --color-surface-card: #e4e0db;
-  --color-primary: #2a6aaa;
-  --color-primary-soft: #4a8aca;
-  --color-primary-deep: #1a4a7a;
-  --color-on-primary: #ffffff;
-  --color-ink: #282420;
-  --color-ink-strong: #161410;
-  --color-body: #585450;
-  --color-mute: #888480;
-  --color-hairline: #d0ccc8;
-  --color-accent: #4a8aca;
-}
 
-/* --- Smoke — neutral pure grey, balanced --- */
-[data-theme="smoke"] {
-  --color-canvas: #e8e8e8;
-  --color-canvas-soft: #e0e0e0;
-  --color-surface: #f0f0f0;
-  --color-surface-card: #e4e4e4;
-  --color-primary: #2a6aaa;
-  --color-primary-soft: #4a8aca;
-  --color-primary-deep: #1a4a7a;
-  --color-on-primary: #ffffff;
-  --color-ink: #262626;
-  --color-ink-strong: #141414;
-  --color-body: #565656;
-  --color-mute: #868686;
-  --color-hairline: #cecece;
-  --color-accent: #4a8aca;
-}
-
-/* --- Frost — bright cool grey, highest contrast --- */
-[data-theme="frost"] {
-  --color-canvas: #eceef0;
-  --color-canvas-soft: #e4e6e8;
-  --color-surface: #f4f6f8;
-  --color-surface-card: #e8eaec;
-  --color-primary: #2a6aaa;
-  --color-primary-soft: #4a8aca;
-  --color-primary-deep: #1a4a7a;
-  --color-on-primary: #ffffff;
-  --color-ink: #1e2226;
-  --color-ink-strong: #0e1216;
-  --color-body: #4e5256;
-  --color-mute: #868a8e;
-  --color-hairline: #d0d2d6;
-  --color-accent: #4a8aca;
-}
-
-/* --- Graphite — deepest, moodiest, dramatic --- */
-[data-theme="graphite"] {
-  --color-canvas: #d6d6d6;
-  --color-canvas-soft: #cccccc;
-  --color-surface: #e0e0e0;
-  --color-surface-card: #d4d4d4;
-  --color-primary: #2a6aaa;
-  --color-primary-soft: #4a8aca;
-  --color-primary-deep: #1a4a7a;
-  --color-on-primary: #ffffff;
-  --color-ink: #1a1a1a;
-  --color-ink-strong: #0a0a0a;
-  --color-body: #4a4a4a;
-  --color-mute: #7a7a7a;
-  --color-hairline: #c0c0c0;
-  --color-accent: #4a8aca;
-}
 
 /* --- Reset --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -134,33 +64,6 @@ ul { list-style: none; }
 .container { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--spacing-3xl); }
 .container--narrow { max-width: var(--max-width-narrow); }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
-
-/* --- Theme Switcher --- */
-.theme-switcher {
-  position: fixed;
-  bottom: var(--spacing-3xl);
-  right: var(--spacing-3xl);
-  z-index: 200;
-  display: flex;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-sm);
-  background: var(--color-surface);
-  border: 1px solid var(--color-hairline);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  transition: background 0.3s, border-color 0.3s;
-}
-.theme-btn {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  background: var(--swatch);
-  cursor: pointer;
-  transition: transform 0.2s, border-color 0.2s;
-}
-.theme-btn:hover { transform: scale(1.2); }
-.theme-btn.is-active { border-color: var(--color-ink); }
 
 /* --- Section Headers --- */
 .section-eyebrow {
@@ -485,7 +388,6 @@ ul { list-style: none; }
 /* --- Responsive --- */
 @media (max-width: 767px) {
   .container { padding: 0 var(--spacing-lg); }
-  .theme-switcher { bottom: var(--spacing-lg); right: var(--spacing-lg); }
   .nav__links {
     position: fixed; top: 60px; left: 0; right: 0; bottom: 0;
     background: var(--color-canvas);

@@ -9,33 +9,6 @@
     supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_KEY);
   }
 
-  /* ---- Theme Switcher ---- */
-  var root = document.documentElement;
-  var themeBtns = document.querySelectorAll('.theme-btn');
-
-  // Load saved theme
-  var savedTheme = localStorage.getItem('recrurep-theme');
-  if (savedTheme) {
-    root.setAttribute('data-theme', savedTheme);
-    themeBtns.forEach(function (btn) {
-      if (btn.getAttribute('data-theme') === savedTheme) {
-        btn.classList.add('is-active');
-      }
-    });
-  } else {
-    document.querySelector('.theme-btn[data-theme="slate"]').classList.add('is-active');
-  }
-
-  themeBtns.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var theme = this.getAttribute('data-theme');
-      root.setAttribute('data-theme', theme);
-      localStorage.setItem('recrurep-theme', theme);
-      themeBtns.forEach(function (b) { b.classList.remove('is-active'); });
-      this.classList.add('is-active');
-    });
-  });
-
   /* ---- Mobile Nav ---- */
   var hamburger = document.getElementById('hamburger');
   var navLinks = document.getElementById('navLinks');
