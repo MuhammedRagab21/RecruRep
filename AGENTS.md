@@ -28,6 +28,8 @@ Users pay **$1.99** via Stripe Checkout before being added to the waitlist. Flow
 - `STRIPE_WEBHOOK_SECRET` — Stripe webhook signing secret (starts with `whsec_`)
 - `RESEND_API_KEY` — Resend API key for welcome emails
 
+**Important:** Resend free tier only allows sending to the account owner's email. To send to any recipient, verify a domain in Resend Dashboard and update the `from` address in `send-welcome-email` to use that domain (`hello@curric.app`).
+
 **Stripe webhook endpoint:** `https://hvynpslokgslpmekqwmg.supabase.co/functions/v1/stripe-webhook`
 Listen for: `checkout.session.completed`
 
@@ -76,6 +78,8 @@ Vercel env vars to set:
 | **Supabase client not loading** | `main.js` expected global `supabaseClient` but CDN exposes `supabase` with `createClient` method | Switched from client library to direct REST `fetch()` calls — simpler and more reliable |
 | **Price was $1.99 not $1** | `create-checkout` used 199 cents ($1.99) but user wanted $1 | Changed `unit_amount` to 100 cents, later reverted back to 199 at user request |
 | **Vercel SUPABASE_URL was 'y'** | `echo y | vercel env add` piped the confirmation `y` as the actual value | Deleted and re-added env var with correct URL |
+| **Spot counter still stuck after RLS fix** | `Content-Range` header not exposed via CORS — browser JS can't read it | Switched to fetching all IDs and counting array length instead of reading header |
+| **Welcome email not sending to new signups** | Resend free tier only allows sending to the account owner's email | Verified `curric.app` domain in Resend; changed `from` to `hello@curric.app` |
 
 ## SDD artifacts
 SDD workflow artifacts are in `website/.specify/`.
