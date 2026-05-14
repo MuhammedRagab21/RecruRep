@@ -44,27 +44,33 @@
         <span class="pricing-badge">&#x1F513; Beta Access &mdash; <strong>$1</strong> <span id="spotCount">for the first 15 teachers</span></span>
       </div>
 
+      <div class="hero__notice hero__notice--cancelled" id="cancelledNotice" style="display:none">Payment was cancelled. You can try again below.</div>
+
       <form class="hero__form" id="waitlistForm" novalidate>
         <div class="hero__form-fields">
           <input type="text" id="name" name="name" class="text-input" placeholder="Your name" required>
           <input type="email" id="email" name="email" class="text-input" placeholder="Email address" required>
           <select id="country" name="country" class="text-input text-input--select" required>
-            <option value="">Where do you want to teach?</option>
+            <option value="">Where are you from?</option>
             <option value="vietnam">Vietnam</option>
-            <option value="thailand">Thailand</option>
-            <option value="china">China</option>
-            <option value="south-korea">South Korea</option>
-            <option value="japan">Japan</option>
-            <option value="anywhere">Anywhere &mdash; I&apos;m flexible</option>
+            <option value="philippines">Philippines</option>
+            <option value="india">India</option>
+            <option value="brazil">Brazil</option>
+            <option value="egypt">Egypt</option>
+            <option value="mexico">Mexico</option>
+            <option value="colombia">Colombia</option>
+            <option value="turkey">Turkey</option>
+            <option value="other">Other</option>
           </select>
           <button type="submit" class="btn btn--primary btn--hero" id="waitlistSubmit">Get Beta Access &mdash; $1</button>
         </div>
-        <div class="hero__form-success" id="waitlistSuccess">
-          <div class="hero__form-success-icon">&#x2713;</div>
-          <h3 class="hero__form-success-title">You&apos;re in!</h3>
-          <p class="hero__form-success-text">Welcome to the beta. We&apos;ll send you access details shortly.</p>
-        </div>
       </form>
+
+      <div class="hero__form-success" id="waitlistSuccess">
+        <div class="hero__form-success-icon">&#x2713;</div>
+        <h3 class="hero__form-success-title">You&apos;re in!</h3>
+        <p class="hero__form-success-text">Payment confirmed. We&apos;ll send you access details shortly.</p>
+      </div>
       <p class="hero__footnote">One payment. Access for a full year. No subscriptions.</p>
     </div>
   </section>

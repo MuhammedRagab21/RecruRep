@@ -5,8 +5,8 @@
   const SUPABASE_URL = 'https://hvynpslokgslpmekqwmg.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh2eW5wc2xva2dzbHBtZWtxd21nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NjQwMjgsImV4cCI6MjA5NDM0MDAyOH0.ZlwsneuKHDEeYHNktEqq15Sk-iZt-vQsOeGMHXggbK0';
   var sb = null;
-  if (typeof supabase !== 'undefined' && supabase.createClient) {
-    sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  if (typeof supabaseClient !== 'undefined') {
+    sb = supabaseClient.createClient(SUPABASE_URL, SUPABASE_KEY);
   }
 
   /* ---- Load Sample Jobs from Supabase ---- */
@@ -41,8 +41,6 @@
             '<div class="listing-card__school">' + escapeHtml(job.school) + '</div>';
 
           grid.appendChild(card);
-
-          // Fade in with delay
           setTimeout(function () { card.classList.add('is-visible'); }, i * 100);
         });
       });
@@ -66,10 +64,9 @@
         if (result.error) return;
         var count = result.count || 0;
         var remaining = Math.max(0, 15 - count);
-        spotEl.textContent = '— only ' + remaining + ' of 15 beta spots left';
-        if (remaining <= 0) {
-          spotEl.textContent = '— beta is full. Join the waitlist for the public launch.';
-        }
+        spotEl.textContent = remaining > 0
+          ? '\u2014 only ' + remaining + ' of 15 beta spots left'
+          : '\u2014 beta is full. Join the waitlist for the public launch.';
       });
   }
 
@@ -153,7 +150,6 @@
     if (form && success) {
       form.style.display = 'none';
       success.classList.add('is-visible');
-      // Refresh spot count after signup
       loadSpotCount();
     }
   } else if (params.get('payment') === 'cancelled') {
@@ -164,7 +160,7 @@
     }
   }
 
-  /* ---- Waitlist Form ---- */
+  /* ---- Waitlist Form (Stripe Checkout) ---- */
   var form = document.getElementById('waitlistForm');
   var success = document.getElementById('waitlistSuccess');
   var submitBtn = document.getElementById('waitlistSubmit');
@@ -187,30 +183,28 @@
       submitBtn.classList.add('btn--loading');
       submitBtn.textContent = 'Opening checkout...';
 
-      // Insert into Supabase waitlist directly
-      if (sb) {
-        sb
-          .from('waitlist')
-          .insert({ name: name, email: email, country: country })
-          .then(function (result) {
-            if (result.error) {
-              if (result.error.code === '23505') {
-                alert('This email is already on the waitlist!');
-                submitBtn.classList.remove('btn--loading');
-                submitBtn.textContent = 'Get Beta Access \u2014 $1';
-                return;
-              }
-            }
-            // Show success regardless (duplicate also ok)
-            form.style.display = 'none';
-            success.classList.add('is-visible');
-            loadSpotCount();
-          });
-      } else {
-        // Fallback
-        form.style.display = 'none';
-        success.classList.add('is-visible');
-      }
+      fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, email: email, country: country }),
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Server error');
+          return res.json();
+        })
+        .then(function (data) {
+          if (data.url) {
+            window.location.href = data.url;
+          } else {
+            throw new Error('No checkout URL returned');
+          }
+        })
+        .catch(function (err) {
+          console.error('Checkout error:', err);
+          submitBtn.classList.remove('btn--loading');
+          submitBtn.textContent = 'Get Beta Access \u2014 $1';
+          alert('Could not connect to payment. Please try again.');
+        });
     });
   }
 })();
