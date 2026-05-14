@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="earth">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RecruRep — Stop hunting. Start teaching.</title>
-  <meta name="description" content="RecruRep finds teaching jobs from 50+ countries and lets you apply with one click. No more scrolling Facebook groups at midnight.">
-  <meta property="og:title" content="RecruRep — Stop hunting. Start teaching.">
-  <meta property="og:description" content="Teaching jobs from 50+ countries. Apply with one click.">
+  <title>RecruRep — Stop Searching. Start Applying.</title>
+  <meta name="description" content="Curated teaching jobs in Southeast Asia — updated every few days, filtered to your eligibility, delivered to your dashboard. Built by a teacher who was tired of hunting manually.">
+  <meta property="og:title" content="RecruRep — Stop Searching. Start Applying.">
+  <meta property="og:description" content="Curated teaching jobs — filtered by country and eligibility, updated every few days. Built for non-native English teachers, by a teacher.">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23f5f0e8'/><text x='16' y='22' font-size='18' text-anchor='middle' font-family='Inter,sans-serif' font-weight='700' fill='%23c8654a'>R</text></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23e8eaed'/><text x='16' y='22' font-size='18' text-anchor='middle' font-family='Inter,sans-serif' font-weight='700' fill='%232a6aaa'>R</text></svg>">
 </head>
 <body>
-
-
 
   <!-- Navigation -->
   <nav class="nav" id="nav">
@@ -26,7 +24,7 @@
         <a href="#how-it-works" class="nav__link">How It Works</a>
         <a href="#features" class="nav__link">Features</a>
         <a href="#faq" class="nav__link">FAQ</a>
-        <a href="#waitlist" class="nav__link nav__cta">Join the Waitlist</a>
+        <a href="#beta" class="nav__link nav__cta">Get Beta Access &mdash; $1</a>
       </div>
       <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu">
         <span></span><span></span><span></span>
@@ -34,30 +32,30 @@
     </div>
   </nav>
 
-  <!-- Hero -->
-  <section class="hero" id="hero">
-    <div class="container">
+  <!-- Hero + Waitlist -->
+  <section class="hero" id="beta">
+    <div class="container container--narrow">
       <span class="hero__eyebrow">FOR NON-NATIVE ENGLISH TEACHERS</span>
-      <h1 class="hero__title">Stop hunting.<br>Start <em>teaching</em>.</h1>
-      <p class="hero__subtitle">RecruRep finds teaching jobs from 50+ countries and lets you apply with one click. No more scrolling Facebook groups at midnight. No more re-entering your info for every application.</p>
-      <div class="hero__actions">
-        <a href="#waitlist" class="btn btn--primary">Join the Waitlist</a>
-        <a href="#how-it-works" class="btn btn--outline">See How It Works</a>
+      <h1 class="hero__title">Stop searching.<br>Start <em>applying</em>.</h1>
+      <p class="hero__subtitle">Curated teaching jobs — updated every few days, filtered to your eligibility, delivered to your dashboard. Built by a teacher who got tired of hunting manually.</p>
+
+      <div class="hero__pricing">
+        <span class="pricing-badge">&#x1F513; Beta Access &mdash; <strong>$1</strong> for the first 50 teachers</span>
       </div>
-      <div class="hero__visual">
-        <div class="mockup-card">
-          <div class="mockup-card__dots">
-            <span></span><span></span><span></span>
-          </div>
-          <div class="mockup-card__line"><span class="mockup-card__tag">school</span><span>Sunrise International Academy</span></div>
-          <div class="mockup-card__line"><span class="mockup-card__tag">location</span><span>Seoul, South Korea</span></div>
-          <div class="mockup-card__line"><span class="mockup-card__tag">salary</span><span>$2,400 &ndash; $2,800 / month</span></div>
-          <div class="mockup-card__line"><span class="mockup-card__tag">start</span><span>August 2026</span></div>
-          <div class="mockup-card__action">
-            <span class="btn btn--primary btn--small">Apply Now &rarr;</span>
-          </div>
+
+      <form class="hero__form" id="waitlistForm" novalidate>
+        <div class="hero__form-fields">
+          <input type="text" id="name" name="name" class="text-input" placeholder="Your name" required>
+          <input type="email" id="email" name="email" class="text-input" placeholder="Email address" required>
+          <button type="submit" class="btn btn--primary btn--hero" id="waitlistSubmit">Get Beta Access &mdash; $1</button>
         </div>
-      </div>
+        <div class="hero__form-success" id="waitlistSuccess">
+          <div class="hero__form-success-icon">&#x2713;</div>
+          <h3 class="hero__form-success-title">You&apos;re in!</h3>
+          <p class="hero__form-success-text">We&apos;ll send you access details shortly. In the meantime, tell another teacher about us.</p>
+        </div>
+      </form>
+      <p class="hero__footnote">Limited to 50 beta spots. No subscription gimmicks. Built by a teacher, for teachers.</p>
     </div>
   </section>
 
@@ -65,54 +63,54 @@
   <section class="steps" id="how-it-works">
     <div class="container container--narrow">
       <span class="section-eyebrow">HOW IT WORKS</span>
-      <h2 class="section-title">Three steps to your next classroom</h2>
+      <h2 class="section-title">One platform. No more manual searching.</h2>
       <div class="steps__list">
         <div class="step fade-in">
           <span class="step__number">01</span>
           <div class="step__content">
-            <h3 class="step__title">Create your profile</h3>
-            <p class="step__text">Upload your resume, qualifications, and preferences once. RecruRep remembers everything so you never have to repeat yourself.</p>
+            <h3 class="step__title">We scrape &amp; curate</h3>
+            <p class="step__text">Automated agents scan hundreds of sources across the web — job boards, school websites, recruiter channels. Every listing is reviewed before it reaches you. No spam. No dead links.</p>
           </div>
         </div>
         <div class="step fade-in">
           <span class="step__number">02</span>
           <div class="step__content">
-            <h3 class="step__title">AI finds your matches</h3>
-            <p class="step__text">Our system scans thousands of jobs across the globe and surfaces the ones that fit your skills, location preferences, and experience level.</p>
+            <h3 class="step__title">Filtered for you</h3>
+            <p class="step__text">Jobs are categorized by country, eligibility type (open to all vs. native-preferred), qualifications, and job type. Only the ones that fit you make it to your dashboard.</p>
           </div>
         </div>
         <div class="step fade-in">
           <span class="step__number">03</span>
           <div class="step__content">
-            <h3 class="step__title">Apply in one click</h3>
-            <p class="step__text">See a job you like? Press apply. Your profile, documents, and cover letter go straight to the school. No middleman, no agency fees.</p>
+            <h3 class="step__title">Updated every 3&ndash;5 days</h3>
+            <p class="step__text">50+ new entries every cycle. Fresh opportunities delivered to your dashboard while you focus on what matters — preparing for interviews.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Features -->
+  <!-- Features / Value Prop -->
   <section class="features" id="features">
     <div class="container">
-      <span class="section-eyebrow">FEATURES</span>
-      <h2 class="section-title">Everything you need to land your next job</h2>
+      <span class="section-eyebrow">WHY RECRUREP</span>
+      <h2 class="section-title">Curated, not just aggregated</h2>
       <div class="features__grid">
         <div class="card card--feature fade-in">
-          <h3 class="card__title">One-click apply</h3>
-          <p class="card__text">No more re-entering your information. Apply to any job with a single click. Your entire application is sent instantly.</p>
+          <h3 class="card__title">Built by a teacher, for teachers</h3>
+          <p class="card__text">Not a tech bro building around assumptions. A working educator who faced this problem and solved it with his own agents. Every decision serves the teacher.</p>
         </div>
         <div class="card card--feature fade-in">
-          <h3 class="card__title">AI-powered matching</h3>
-          <p class="card__text">Smart algorithms find jobs that match your qualifications, preferred countries, and experience level. No irrelevant listings.</p>
+          <h3 class="card__title">Curated, not aggregated</h3>
+          <p class="card__text">Every listing is reviewed before it enters the database. No spam, no duplicates, no native-only roles mislabeled as open to all. Just real jobs, ready to apply to.</p>
         </div>
         <div class="card card--feature fade-in">
-          <h3 class="card__title">Global job feed</h3>
-          <p class="card__text">Curated listings from 50+ countries, updated daily from thousands of sources. From Seoul to Madrid, one platform has them all.</p>
+          <h3 class="card__title">One place instead of five</h3>
+          <p class="card__text">LinkedIn, Indeed, Facebook groups, WeChat recruiter channels &mdash; stop jumping between them. The jobs are already consolidated in one dashboard.</p>
         </div>
         <div class="card card--feature fade-in">
-          <h3 class="card__title">Application tracking</h3>
-          <p class="card__text">Know exactly where you stand. Track your application status, interview invites, and offers in one clean dashboard.</p>
+          <h3 class="card__title">Non-native speaker filter</h3>
+          <p class="card__text">The platform distinguishes between roles open to all and native-preferred &mdash; a filter most job boards don&apos;t offer. No more wasted applications.</p>
         </div>
       </div>
     </div>
@@ -125,63 +123,33 @@
       <h2 class="section-title">Common questions</h2>
       <div class="faq__list">
         <details class="faq__item" open>
-          <summary class="faq__question">Who is RecruRep for?</summary>
-          <div class="faq__answer"><p>Non-native English teachers looking for ESL teaching positions abroad. Whether you have 10 years of experience or you&apos;re just starting your teaching journey, RecruRep helps you find and apply to jobs faster.</p></div>
+          <summary class="faq__question">Who is this for?</summary>
+          <div class="faq__answer"><p>Non-native English teachers looking for teaching positions abroad. Whether you have 10 years of experience or you&apos;re just starting, RecruRep helps you find real opportunities faster.</p></div>
         </details>
         <details class="faq__item">
-          <summary class="faq__question">How is this different from job boards?</summary>
-          <div class="faq__answer"><p>Job boards show you listings but send you elsewhere to apply. RecruRep is end-to-end: browse, apply, track&mdash;all in one place. No re-entering your information, no bouncing between sites.</p></div>
+          <summary class="faq__question">How is this different from LinkedIn or Indeed?</summary>
+          <div class="faq__answer"><p>LinkedIn and Indeed are search engines &mdash; you go to them, you filter, you scroll. RecruRep is a curated feed. Jobs come to you, already filtered for eligibility, location, and type. No spam, no duplicates, no scanning page after page.</p></div>
         </details>
         <details class="faq__item">
-          <summary class="faq__question">Is RecruRep free?</summary>
-          <div class="faq__answer"><p>Yes. You can browse all jobs and apply for free. Premium plans with unlimited applications, AI-assisted cover letters, and priority support are coming soon.</p></div>
+          <summary class="faq__question">Why target non-native speakers specifically?</summary>
+          <div class="faq__answer"><p>Non-native speakers face a different job market. Some roles are open to all, some are native-preferred &mdash; knowing the difference saves you from wasted applications. RecruRep&apos;s filter system is built around that distinction. Generic job boards don&apos;t offer this.</p></div>
         </details>
         <details class="faq__item">
-          <summary class="faq__question">What countries have jobs on RecruRep?</summary>
-          <div class="faq__answer"><p>South Korea, Japan, China, Vietnam, Thailand, UAE, Saudi Arabia, Spain, Mexico, and more added weekly. We focus on countries with the highest demand for English teachers.</p></div>
+          <summary class="faq__question">How do I know the jobs are real?</summary>
+          <div class="faq__answer"><p>Every listing is reviewed before it goes into the database. If a listing looks suspicious, it doesn&apos;t make the platform. No spam. No dead links. No garbage.</p></div>
         </details>
         <details class="faq__item">
-          <summary class="faq__question">Do I need teaching experience?</summary>
-          <div class="faq__answer"><p>Not for all jobs. Many schools hire new teachers for assistant roles and entry-level positions. You can filter by experience level to find the right opportunities for you.</p></div>
+          <summary class="faq__question">Can't I just search for free on my own?</summary>
+          <div class="faq__answer"><p>You can. But most teachers spend 1&ndash;2 hours per search session. Over a year that&apos;s 50+ hours of hunting. RecruRep does the work for $1 &mdash; curated, filtered, delivered to your dashboard while you prepare for interviews.</p></div>
         </details>
         <details class="faq__item">
-          <summary class="faq__question">Can I use RecruRep on my phone?</summary>
-          <div class="faq__answer"><p>Absolutely. RecruRep is built mobile-first so you can browse jobs and apply from anywhere. No app download needed&mdash;it works in your browser.</p></div>
+          <summary class="faq__question">What if I don't find anything relevant?</summary>
+          <div class="faq__answer"><p>If the platform hasn&apos;t been updated in 30 days, you receive a full refund. No questions asked. The risk is minimal either way.</p></div>
         </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- Waitlist -->
-  <section class="waitlist" id="waitlist">
-    <div class="container container--narrow">
-      <span class="section-eyebrow">GET EARLY ACCESS</span>
-      <h2 class="section-title">Be the first to teach abroad with RecruRep</h2>
-      <p class="section-subtitle">Join teachers from 30+ countries already on the waitlist. Get priority access when we launch.</p>
-      <form class="waitlist__form" id="waitlistForm" novalidate>
-        <div class="waitlist__fields">
-          <input type="text" id="name" name="name" class="text-input" placeholder="Your name" required>
-          <input type="email" id="email" name="email" class="text-input" placeholder="Email address" required>
-          <select id="location" name="location" class="text-input text-input--select">
-            <option value="">Where do you want to teach?</option>
-            <option value="south-korea">South Korea</option>
-            <option value="japan">Japan</option>
-            <option value="china">China</option>
-            <option value="vietnam">Vietnam</option>
-            <option value="thailand">Thailand</option>
-            <option value="uae">UAE</option>
-            <option value="spain">Spain</option>
-            <option value="mexico">Mexico</option>
-            <option value="anywhere">Anywhere &mdash; I&apos;m flexible</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn--primary btn--full btn--lg" id="waitlistSubmit">Join the Waitlist</button>
-        <p class="waitlist__hint">No spam. Just one email when we launch.</p>
-      </form>
-      <div class="waitlist__success" id="waitlistSuccess">
-        <div class="waitlist__success-icon">&#x2713;</div>
-        <h3 class="waitlist__success-title">You&apos;re on the list!</h3>
-        <p class="waitlist__success-text">We&apos;ll notify you when RecruRep launches. In the meantime, tell another teacher about us.</p>
+        <details class="faq__item">
+          <summary class="faq__question">Will I actually get hired from this?</summary>
+          <div class="faq__answer"><p>We can&apos;t promise outcomes &mdash; that depends on your qualifications and the current market. What we can promise is access to more relevant opportunities than you&apos;ll find manually. More quality applications in less time means better odds.</p></div>
+        </details>
       </div>
     </div>
   </section>
@@ -192,7 +160,7 @@
       <div class="footer__grid">
         <div class="footer__brand">
           <span class="footer__logo">RecruRep</span>
-          <p class="footer__tagline">Stop hunting. Start teaching.</p>
+          <p class="footer__tagline">Curated teaching jobs. Built by a teacher, for teachers.</p>
         </div>
         <div class="footer__links">
           <h4 class="footer__heading">Product</h4>
