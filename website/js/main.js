@@ -54,16 +54,18 @@
   function loadSpotCount() {
     var spotEl = document.getElementById('spotCount');
     if (!spotEl) return;
-    fetch(SUPABASE_URL + '/rest/v1/waitlist?id=select:count&limit=0', {
-      headers: sbHeaders
-    }).then(function (r) { return r.json(); })
-    .then(function (data) {
-      var count = data.length || 0;
-      var remaining = Math.max(0, 15 - count);
-      spotEl.textContent = remaining > 0
-        ? '\u2014 only ' + remaining + ' of 15 beta spots left'
-        : '\u2014 beta is full. Join the waitlist for the public launch.';
-    });
+    var countHeaders = { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Prefer': 'count=exact' };
+    fetch(SUPABASE_URL + '/rest/v1/waitlist?select=id&limit=1', { headers: countHeaders })
+      .then(function (r) {
+        var range = r.headers.get('content-range');
+        var count = range ? parseInt(range.split('/')[1], 10) : 0;
+        if (isNaN(count)) count = 0;
+        var remaining = Math.max(0, 15 - count);
+        spotEl.textContent = '\u2014 only ' + remaining + ' of 15 beta spots left';
+        if (remaining <= 0) {
+          spotEl.textContent = '\u2014 beta is full. Join the waitlist for the public launch.';
+        }
+      });
   }
 
   function esc(str) {
