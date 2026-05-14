@@ -175,12 +175,14 @@
 
       var name = document.getElementById('name').value.trim();
       var email = document.getElementById('email').value.trim();
+      var country = document.getElementById('country').value;
 
       if (!name) { alert('Please enter your name.'); return; }
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         alert('Please enter a valid email address.');
         return;
       }
+      if (!country) { alert('Please select where you want to teach.'); return; }
 
       submitBtn.classList.add('btn--loading');
       submitBtn.textContent = 'Opening checkout...';
@@ -189,7 +191,7 @@
       if (sb) {
         sb
           .from('waitlist')
-          .insert({ name: name, email: email })
+          .insert({ name: name, email: email, country: country })
           .then(function (result) {
             if (result.error) {
               if (result.error.code === '23505') {
