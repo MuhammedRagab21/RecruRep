@@ -9,6 +9,73 @@
     supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_KEY);
   }
 
+  /* ---- Load Sample Jobs from Supabase ---- */
+  function loadJobs() {
+    var grid = document.getElementById('listingsGrid');
+    if (!grid || !supabase) return;
+
+    supabase
+      .from('jobs')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(4)
+      .then(function (result) {
+        if (result.error || !result.data || result.data.length === 0) {
+          grid.innerHTML = '<div class="listing-card__loading">No sample listings available right now.</div>';
+          return;
+        }
+
+        grid.innerHTML = '';
+        result.data.forEach(function (job, i) {
+          var card = document.createElement('div');
+          card.className = 'listing-card';
+          card.style.transitionDelay = (i * 0.1) + 's';
+          card.innerHTML =
+            '<div class="listing-card__title">' + escapeHtml(job.title) + '</div>' +
+            '<div class="listing-card__meta">' +
+              '<span class="listing-card__tag"><strong>Country:</strong> ' + escapeHtml(job.country) + '</span>' +
+              '<span class="listing-card__tag"><strong>Salary:</strong> ' + escapeHtml(job.salary) + '</span>' +
+              '<span class="listing-card__tag"><strong>Type:</strong> ' + escapeHtml(job.type) + '</span>' +
+              '<span class="listing-card__tag"><strong>Eligibility:</strong> ' + escapeHtml(job.eligibility) + '</span>' +
+            '</div>' +
+            '<div class="listing-card__school">' + escapeHtml(job.school) + '</div>';
+
+          grid.appendChild(card);
+
+          // Fade in with delay
+          setTimeout(function () { card.classList.add('is-visible'); }, i * 100);
+        });
+      });
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+
+  /* ---- Count Signups & Update Spot Counter ---- */
+  function loadSpotCount() {
+    var spotEl = document.getElementById('spotCount');
+    if (!spotEl || !supabase) return;
+
+    supabase
+      .from('waitlist')
+      .select('id', { count: 'exact', head: true })
+      .then(function (result) {
+        if (result.error) return;
+        var count = result.count || 0;
+        var remaining = Math.max(0, 15 - count);
+        spotEl.textContent = '— only ' + remaining + ' of 15 beta spots left';
+        if (remaining <= 0) {
+          spotEl.textContent = '— beta is full. Join the waitlist for the public launch.';
+        }
+      });
+  }
+
+  loadJobs();
+  loadSpotCount();
+
   /* ---- Mobile Nav ---- */
   var hamburger = document.getElementById('hamburger');
   var navLinks = document.getElementById('navLinks');
@@ -78,7 +145,26 @@
     document.querySelectorAll('.fade-in').forEach(function (el) { el.classList.add('is-visible'); });
   }
 
-  /* ---- Waitlist Form (Supabase) ---- */
+  /* ---- Handle Payment Result on Page Load ---- */
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('payment') === 'success') {
+    var form = document.getElementById('waitlistForm');
+    var success = document.getElementById('waitlistSuccess');
+    if (form && success) {
+      form.style.display = 'none';
+      success.classList.add('is-visible');
+      // Refresh spot count after signup
+      loadSpotCount();
+    }
+  } else if (params.get('payment') === 'cancelled') {
+    var notice = document.getElementById('cancelledNotice');
+    if (notice) { notice.style.display = 'block'; }
+    if (window.history.replaceState) {
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }
+
+  /* ---- Waitlist Form ---- */
   var form = document.getElementById('waitlistForm');
   var success = document.getElementById('waitlistSuccess');
   var submitBtn = document.getElementById('waitlistSubmit');
@@ -97,30 +183,29 @@
       }
 
       submitBtn.classList.add('btn--loading');
-      submitBtn.textContent = 'Joining...';
+      submitBtn.textContent = 'Opening checkout...';
 
+      // Insert into Supabase waitlist directly
       if (supabase) {
         supabase
           .from('waitlist')
           .insert({ name: name, email: email })
           .then(function (result) {
-            submitBtn.classList.remove('btn--loading');
-            submitBtn.textContent = 'Join the Waitlist';
             if (result.error) {
               if (result.error.code === '23505') {
                 alert('This email is already on the waitlist!');
-              } else {
-                alert('Something went wrong. Please try again.');
+                submitBtn.classList.remove('btn--loading');
+                submitBtn.textContent = 'Get Beta Access \u2014 $1';
+                return;
               }
-              return;
             }
+            // Show success regardless (duplicate also ok)
             form.style.display = 'none';
             success.classList.add('is-visible');
+            loadSpotCount();
           });
       } else {
-        // Fallback: show success without backend
-        submitBtn.classList.remove('btn--loading');
-        submitBtn.textContent = 'Join the Waitlist';
+        // Fallback
         form.style.display = 'none';
         success.classList.add('is-visible');
       }
