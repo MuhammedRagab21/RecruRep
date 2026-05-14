@@ -51,5 +51,16 @@ Slate blue-grey (`#e8eaed` canvas) with navy (`#2a6aaa`) accent.
 - **Deploy command:** `vercel --prod --cwd website` (from root)
 - Config stored in `website/vercel.json`
 
+## Known bugs and fixes (don't repeat these)
+
+| Bug | Root cause | Fix |
+|-----|------------|-----|
+| **Welcome email not sending** | `send-welcome-email` was a placeholder with `// TODO` — no email service wired up | Implemented Resend sending in `send-welcome-email`; set `RESEND_API_KEY` secret |
+| **Spot counter stuck** | Supabase REST query used invalid syntax `?id=select:count&limit=0` instead of counting via `Prefer: count=exact` + `content-range` header | Rewrote query to use `?select=id&limit=1` with `Prefer: count=exact`, parse count from response header |
+| **DB trigger broken** | `handle_new_waitlist()` called `net.http_post()` with `headers` as `text` (cast with `::text`) but `pg_net` expects `jsonb` | Changed headers parameter from `::text` cast to raw `jsonb` object |
+| **Webhook missing country** | `stripe-webhook` only inserted `email` and `name` into waitlist, dropped the `country` field | Webhook now fetches `country` from payments table before upserting into waitlist |
+| **Price mismatch** | `create-checkout` used 199 cents ($1.99) but page copy and user expectation was $1 | Changed `unit_amount` to 100 cents in the edge function |
+| **Supabase client not loading** | `main.js` expected global `supabaseClient` but CDN exposes `supabase` with `createClient` method | Switched from client library to direct REST `fetch()` calls — simpler and more reliable |
+
 ## SDD artifacts
 SDD workflow artifacts are in `website/.specify/`.
