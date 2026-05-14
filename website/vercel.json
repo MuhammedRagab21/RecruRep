@@ -1,5 +1,6 @@
 {
   "version": 2,
   "framework": null,
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "buildCommand": "cp config.template.js config.js && sed -i \"s|__SUPABASE_URL__|$SUPABASE_URL|g; s|__SUPABASE_ANON_KEY__|$SUPABASE_ANON_KEY|g\" config.js"
 }

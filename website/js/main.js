@@ -1,26 +1,37 @@
 (function () {
   'use strict';
 
-  /* ---- Supabase REST (direct fetch, no client library needed) ---- */
-  var SUPABASE_URL = 'https://hvynpslokgslpmekqwmg.supabase.co';
-  var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh2eW5wc2xva2dzbHBtZWtxd21nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NjQwMjgsImV4cCI6MjA5NDM0MDAyOH0.ZlwsneuKHDEeYHNktEqq15Sk-iZt-vQsOeGMHXggbK0';
+  /* ---- Config (injected at build time via Vercel env vars) ---- */
+  var cfg = window.__CURRIC_CONFIG__ || {
+    supabaseUrl: 'http://localhost:54321',
+    supabaseKey: 'fallback-local-dev-key',
+    stripePrice: 199,
+    priceLabel: '$1.99',
+    maxBetaSpots: 15,
+  };
+
+  var SUPABASE_URL = cfg.supabaseUrl;
+  var SUPABASE_KEY = cfg.supabaseKey;
+  var PRICE_LABEL = cfg.priceLabel;
+
+  /* ---- Supabase REST helpers ---- */
   var sbHeaders = {
     'apikey': SUPABASE_KEY,
     'Authorization': 'Bearer ' + SUPABASE_KEY,
     'Content-Type': 'application/json',
-    'Prefer': 'return=minimal'
   };
 
-  function sbFetch(method, table, body) {
+  function sbFetch(method, path, body) {
     var opts = { method: method, headers: sbHeaders };
     if (body) { opts.body = JSON.stringify(body); }
-    return fetch(SUPABASE_URL + '/rest/v1/' + table, opts).then(function (r) { return r.json(); });
+    return fetch(SUPABASE_URL + '/rest/v1/' + path, opts).then(function (r) { return r.json(); });
   }
 
-  /* ---- Load Sample Jobs from Supabase ---- */
+  /* ---- Load Sample Jobs ---- */
   function loadJobs() {
     var grid = document.getElementById('listingsGrid');
     if (!grid) return;
+
     sbFetch('GET', 'jobs?select=*&order=created_at.desc&limit=4')
       .then(function (data) {
         if (!data || !data.length) {
@@ -50,18 +61,19 @@
       });
   }
 
-  /* ---- Count Signups & Update Spot Counter ---- */
+  /* ---- Spot Counter ---- */
   function loadSpotCount() {
     var spotEl = document.getElementById('spotCount');
     if (!spotEl) return;
+
     var countHeaders = { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Prefer': 'count=exact' };
     fetch(SUPABASE_URL + '/rest/v1/waitlist?select=id&limit=1', { headers: countHeaders })
       .then(function (r) {
         var range = r.headers.get('content-range');
         var count = range ? parseInt(range.split('/')[1], 10) : 0;
         if (isNaN(count)) count = 0;
-        var remaining = Math.max(0, 15 - count);
-        spotEl.textContent = '\u2014 only ' + remaining + ' of 15 beta spots left';
+        var remaining = Math.max(0, cfg.maxBetaSpots - count);
+        spotEl.textContent = '\u2014 only ' + remaining + ' of ' + cfg.maxBetaSpots + ' beta spots left';
         if (remaining <= 0) {
           spotEl.textContent = '\u2014 beta is full. Join the waitlist for the public launch.';
         }
@@ -133,7 +145,7 @@
     document.querySelectorAll('.fade-in').forEach(function (el) { el.classList.add('is-visible'); });
   }
 
-  /* ---- Handle Payment Result on Page Load ---- */
+  /* ---- Handle Payment Result ---- */
   var params = new URLSearchParams(window.location.search);
   if (params.get('payment') === 'success') {
     var successForm = document.getElementById('waitlistForm');
@@ -187,7 +199,7 @@
         })
         .catch(function () {
           submitBtn.classList.remove('btn--loading');
-          submitBtn.textContent = 'Get Beta Access \u2014 $1';
+          submitBtn.textContent = 'Get Beta Access \u2014 ' + PRICE_LABEL;
           alert('Could not connect to payment. Please try again.');
         });
     });
