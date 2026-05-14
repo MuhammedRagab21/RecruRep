@@ -1,7 +1,42 @@
 (function () {
   'use strict';
 
-  /* ---- Mobile Nav Toggle ---- */
+  /* ---- Supabase ---- */
+  const SUPABASE_URL = 'https://hvynpslokgslpmekqwmg.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh2eW5wc2xva2dzbHBtZWtxd21nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NjQwMjgsImV4cCI6MjA5NDM0MDAyOH0.ZlwsneuKHDEeYHNktEqq15Sk-iZt-vQsOeGMHXggbK0';
+  var supabase = null;
+  if (typeof supabaseClient !== 'undefined') {
+    supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_KEY);
+  }
+
+  /* ---- Theme Switcher ---- */
+  var root = document.documentElement;
+  var themeBtns = document.querySelectorAll('.theme-btn');
+
+  // Load saved theme
+  var savedTheme = localStorage.getItem('recrurep-theme');
+  if (savedTheme) {
+    root.setAttribute('data-theme', savedTheme);
+    themeBtns.forEach(function (btn) {
+      if (btn.getAttribute('data-theme') === savedTheme) {
+        btn.classList.add('is-active');
+      }
+    });
+  } else {
+    document.querySelector('.theme-btn[data-theme="earth"]').classList.add('is-active');
+  }
+
+  themeBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var theme = this.getAttribute('data-theme');
+      root.setAttribute('data-theme', theme);
+      localStorage.setItem('recrurep-theme', theme);
+      themeBtns.forEach(function (b) { b.classList.remove('is-active'); });
+      this.classList.add('is-active');
+    });
+  });
+
+  /* ---- Mobile Nav ---- */
   var hamburger = document.getElementById('hamburger');
   var navLinks = document.getElementById('navLinks');
 
@@ -10,7 +45,6 @@
       this.classList.toggle('is-active');
       navLinks.classList.toggle('is-open');
     });
-
     navLinks.querySelectorAll('.nav__link').forEach(function (link) {
       link.addEventListener('click', function () {
         hamburger.classList.remove('is-active');
@@ -22,107 +56,101 @@
   /* ---- Smooth Scroll ---- */
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
-      var href = this.getAttribute('href');
-      if (href === '#') return;
-      var target = document.querySelector(href);
+      var target = document.querySelector(this.getAttribute('href'));
       if (target) {
         e.preventDefault();
-        var navHeight = 64;
-        var targetPos = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
-        window.scrollTo({ top: targetPos, behavior: 'smooth' });
+        var offset = 70;
+        var pos = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: pos, behavior: 'smooth' });
       }
     });
   });
 
   /* ---- Active Nav Link ---- */
   var sections = document.querySelectorAll('section[id]');
-  var navLinkEls = document.querySelectorAll('.nav__link:not(.nav__link--cta)');
+  var navLinkEls = document.querySelectorAll('.nav__link:not(.nav__cta)');
 
   function updateActiveLink() {
     var current = '';
     var scrollY = window.pageYOffset + 100;
-
-    sections.forEach(function (section) {
-      var top = section.offsetTop;
-      var height = section.offsetHeight;
+    sections.forEach(function (s) {
+      var top = s.offsetTop;
+      var height = s.offsetHeight;
       if (scrollY >= top && scrollY < top + height) {
-        current = section.getAttribute('id');
+        current = s.getAttribute('id');
       }
     });
-
     navLinkEls.forEach(function (link) {
-      link.classList.remove('nav__link--active');
+      link.style.color = '';
       if (link.getAttribute('href') === '#' + current) {
-        link.classList.add('nav__link--active');
+        link.style.color = 'var(--color-ink-strong)';
       }
     });
   }
 
   window.addEventListener('scroll', updateActiveLink);
-  updateActiveLink();
 
-  /* ---- FAQ Accordion (close siblings on open) ---- */
-  document.querySelectorAll('.faq__item').forEach(function (item) {
-    item.addEventListener('toggle', function () {
-      if (item.open) {
-        document.querySelectorAll('.faq__item').forEach(function (other) {
-          if (other !== item && other.open) {
-            other.open = false;
-          }
-        });
-      }
-    });
-  });
-
-  /* ---- IntersectionObserver Fade-in ---- */
+  /* ---- Scroll Fade-in ---- */
   if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-    );
-
-    document.querySelectorAll('.fade-in').forEach(function (el) {
-      observer.observe(el);
-    });
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.fade-in').forEach(function (el) { observer.observe(el); });
   } else {
-    document.querySelectorAll('.fade-in').forEach(function (el) {
-      el.classList.add('is-visible');
-    });
+    document.querySelectorAll('.fade-in').forEach(function (el) { el.classList.add('is-visible'); });
   }
 
-  /* ---- CTA Form Validation + Success ---- */
-  var ctaForm = document.getElementById('ctaForm');
-  var ctaSuccess = document.getElementById('ctaSuccess');
-  var ctaEmail = document.getElementById('ctaEmail');
+  /* ---- Waitlist Form (Supabase) ---- */
+  var form = document.getElementById('waitlistForm');
+  var success = document.getElementById('waitlistSuccess');
+  var submitBtn = document.getElementById('waitlistSubmit');
 
-  if (ctaForm && ctaEmail && ctaSuccess) {
-    ctaForm.addEventListener('submit', function (e) {
+  if (form && success) {
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      var email = ctaEmail.value.trim();
-      ctaEmail.classList.remove('cta-band__input--error');
+      var name = document.getElementById('name').value.trim();
+      var email = document.getElementById('email').value.trim();
 
-      if (!email) {
-        ctaEmail.classList.add('cta-band__input--error');
-        ctaEmail.focus();
+      if (!name) { alert('Please enter your name.'); return; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert('Please enter a valid email address.');
         return;
       }
 
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        ctaEmail.classList.add('cta-band__input--error');
-        ctaEmail.focus();
-        return;
-      }
+      submitBtn.classList.add('btn--loading');
+      submitBtn.textContent = 'Joining...';
 
-      ctaForm.querySelector('.cta-band__fields').style.display = 'none';
-      ctaSuccess.classList.add('cta-band__success--visible');
+      if (supabase) {
+        supabase
+          .from('waitlist')
+          .insert({ name: name, email: email })
+          .then(function (result) {
+            submitBtn.classList.remove('btn--loading');
+            submitBtn.textContent = 'Join the Waitlist';
+            if (result.error) {
+              if (result.error.code === '23505') {
+                alert('This email is already on the waitlist!');
+              } else {
+                alert('Something went wrong. Please try again.');
+              }
+              return;
+            }
+            form.style.display = 'none';
+            success.classList.add('is-visible');
+          });
+      } else {
+        // Fallback: show success without backend
+        submitBtn.classList.remove('btn--loading');
+        submitBtn.textContent = 'Join the Waitlist';
+        form.style.display = 'none';
+        success.classList.add('is-visible');
+      }
     });
   }
 })();
