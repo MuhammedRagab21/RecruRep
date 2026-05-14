@@ -1,34 +1,28 @@
-# Curric Workspace
+# RecruRep Workspace
 
-Three independent projects:
+Two independent projects + one website:
 
-- `spec-kit/` — GitHub Spec Kit toolkit (Spec-Driven Development). Has its own `AGENTS.md`.
-- `awesome-design-md/` — Collection of DESIGN.md files for UI inspiration.
-- `website/` — Curric landing page (React + Vite + TypeScript).
+- `spec-kit/` — GitHub Spec Kit toolkit (Spec-Driven Development). Has its own `AGENTS.md` for adding integrations, running tests, and building the CLI.
+- `awesome-design-md/` — Collection of DESIGN.md files from popular websites for UI inspiration.
+- `website/` — RecruRep landing page (vanilla HTML/CSS/JS).
 
 ## website/ — Landing Page
 
-**Stack:** Vite + React 19 + TypeScript + Tailwind CSS v4 + Three.js + shadcn/ui.
+**Stack:** Vanilla HTML5, CSS3, ES6+. No frameworks, no build step.
 
-**Theme:** 4 color variants (Navy+Gold, Teal+Terracotta, Slate+Amber, Deep Blue+Sage).
+**Design:** VoltAgent-inspired dark theme (`DESIGN.md` at `website/DESIGN.md`).
+- Canvas `#101010`, emerald `#00d992`, Inter font, hairline borders, no shadows, no light mode.
 
-**Key files:**
-- `src/App.tsx` — entry point with theme switcher
-- `src/components/ui/waitlist-landing-page-with-countdown-timer.tsx` — main waitlist component with Three.js animated background
-- `src/index.css` — Tailwind import
-- `vite.config.ts` — Vite + React + Tailwind + `@/` path alias
+**To preview:** Open `website/index.html` in a browser or serve with any static file server.
 
-**Commands:**
-- `npm run dev` — start dev server (http://localhost:5173)
-- `npm run build` — production build to `dist/`
-- `npm run preview` — preview production build
+**SDD artifacts** live in `website/.specify/`:
+- `memory/constitution.md` — project principles
+- `specs/001-landing-page/` — spec, plan, tasks
 
-**Dependencies:** `three`, `lucide-react`, `tailwindcss`, `@tailwindcss/vite`.
-
-**Supabase:** Waitlist form submits to Supabase via MCP (configured in `opencode.json`). Update `SUPABASE_URL` and `SUPABASE_ANON_KEY` in the component.
+**Structure:** Single `index.html`, `css/style.css`, `js/main.js`. Responsive breakpoints at 768px (mobile) and 1024px (desktop).
 
 ## Key conventions
 
-- Use `@/` path alias for imports (e.g., `@/components/ui/...`)
-- Default component path: `src/components/ui/`
-- All DESIGN.md files use [Stitch format](https://stitch.withgoogle.com/docs/design-md/format/)
+- Do NOT add a build step or framework unless explicitly asked.
+- The `specify` CLI (`uv tool install specify-cli`) is installed but has Unicode issues on Windows PowerShell — prefer editing SDD files directly.
+- All DESIGN.md files use the [Stitch format](https://stitch.withgoogle.com/docs/design-md/format/).
