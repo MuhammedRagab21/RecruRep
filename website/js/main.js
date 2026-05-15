@@ -229,17 +229,6 @@
           }
 
           window.location.href = result.data.url;
-        });
-          }
-          if (!res.ok) throw new Error('Server error');
-          return res.json();
-        })
-        .then(function (data) {
-          if (data.url) {
-            window.location.href = data.url;
-          } else {
-            throw new Error('No checkout URL');
-          }
         })
         .catch(function (err) {
           submitBtn.classList.remove('btn--loading');
