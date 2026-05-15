@@ -153,9 +153,11 @@
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     document.querySelectorAll('.fade-in').forEach(function (el) { observer.observe(el); });
-  } else {
-    document.querySelectorAll('.fade-in').forEach(function (el) { el.classList.add('is-visible'); });
   }
+  // Safety timeout: show all fade-in sections after 3s regardless
+  setTimeout(function () {
+    document.querySelectorAll('.fade-in:not(.is-visible)').forEach(function (el) { el.classList.add('is-visible'); });
+  }, 3000);
 
   /* ---- Handle Payment Result ---- */
   var params = new URLSearchParams(window.location.search);
