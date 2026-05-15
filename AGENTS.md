@@ -66,6 +66,23 @@ Vercel env vars to set:
 - **Deploy command:** `vercel --prod --cwd website` (from root)
 - Config stored in `website/vercel.json`
 
+## Production hardening (completed May 2026)
+
+| Area | Fix | Details |
+|------|-----|---------|
+| **RLS** | Removed public read/insert on `waitlist` & `payments` | Anon key can no longer leak signup emails or insert fake payments |
+| **RLS** | Admin read policy restricted to `auth.role() = 'service_role'` | Only service_role can read waitlist data |
+| **Grants** | Revoked DELETE/UPDATE/TRUNCATE on `waitlist` & `payments` from anon | Defense in depth against future RLS policy mistakes |
+| **CORS** | All 4 edge functions restricted to `https://curric.app` | No origin echo, no `*` fallback |
+| **CSP** | Content-Security-Policy, X-Frame-Options, HSTS, etc. in `vercel.json` | Mitigates XSS, clickjacking, MIME sniffing |
+| **Rate limiting** | Method restrictions on all functions | spot-count GET-only, stripe-webhook POST-only, etc. |
+| **Error handling** | stripe-webhook returns 500 on DB failure | Stripe retries instead of silently dropping payments |
+| **Error handling** | create-checkout has try/catch on Stripe calls | Orphaned pending records marked as `failed` |
+| **Idempotency** | create-checkout deduplicates by email | No duplicate payment records for same email |
+| **spot-count** | Uses `count: exact, head: true` instead of fetching rows | Efficient, no data leak |
+| **JS bugs** | Smooth scroll crash fixed, sessionStorage for payment state, Escape key for nav, CSS class for active nav link | Various edge cases handled |
+| **Security headers** | CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy | All set via `vercel.json` |
+
 ## Known bugs and fixes (don't repeat these)
 
 | Bug | Root cause | Fix |
