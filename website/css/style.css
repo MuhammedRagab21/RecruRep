@@ -540,4 +540,11 @@ ul { list-style: none; }
   .founders__grid { grid-template-columns: 1fr; gap: var(--spacing-4xl); }
   .offer__grid { grid-template-columns: 1fr; }
   .footer__grid { grid-template-columns: 1fr; gap: var(--spacing-4xl); }
+
+  /* Restore native select dropdown on mobile */
+  .text-input--select {
+    appearance: auto;
+    background-image: none;
+    padding-right: var(--spacing-lg);
+  }
 }
