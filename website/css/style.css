@@ -23,6 +23,7 @@
   --font-sans: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
 
+  --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 12px;
   --spacing-lg: 16px;
@@ -153,6 +154,7 @@ ul { list-style: none; }
   transition: color 0.2s;
 }
 .nav__link:hover { color: var(--color-ink-strong); }
+.nav__link.is-active { color: var(--color-ink-strong); }
 .nav__cta {
   padding: var(--spacing-sm) var(--spacing-lg);
   background: var(--color-primary);

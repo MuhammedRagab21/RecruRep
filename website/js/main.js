@@ -2,13 +2,16 @@
   'use strict';
 
   /* ---- Config (injected at build time via Vercel env vars) ---- */
-  var cfg = window.__CURRIC_CONFIG__ || {
-    supabaseUrl: 'http://localhost:54321',
-    supabaseKey: 'fallback-local-dev-key',
-    stripePrice: 199,
-    priceLabel: '$1.99',
-    maxBetaSpots: 15,
-  };
+  var cfg = window.__CURRIC_CONFIG__ || (
+    console.warn('[Curric] config.js failed to load — using fallback config. Site may not work correctly.'),
+    {
+      supabaseUrl: 'http://localhost:54321',
+      supabaseKey: 'fallback-local-dev-key',
+      stripePrice: 199,
+      priceLabel: '$1.99',
+      maxBetaSpots: 15,
+    }
+  );
 
   var SUPABASE_URL = cfg.supabaseUrl;
   var SUPABASE_KEY = cfg.supabaseKey;
@@ -77,7 +80,7 @@
         }
       })
       .catch(function () {
-        spotEl.textContent = '\u2014 ' + cfg.maxBetaSpots + ' beta spots available';
+        spotEl.textContent = '\u2014 only ' + cfg.maxBetaSpots + ' of ' + cfg.maxBetaSpots + ' beta spots left';
       });
   }
 
@@ -104,12 +107,20 @@
         navLinks.classList.remove('is-open');
       });
     });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && navLinks.classList.contains('is-open')) {
+        hamburger.classList.remove('is-active');
+        navLinks.classList.remove('is-open');
+      }
+    });
   }
 
   /* ---- Smooth Scroll ---- */
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
-      var target = document.querySelector(this.getAttribute('href'));
+      var href = this.getAttribute('href');
+      if (href === '#' || !href) return;
+      var target = document.querySelector(href);
       if (target) {
         e.preventDefault();
         window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - 70, behavior: 'smooth' });
@@ -128,8 +139,8 @@
       if (scrollY >= top && scrollY < top + h) current = s.getAttribute('id');
     });
     navLinkEls.forEach(function (link) {
-      link.style.color = '';
-      if (link.getAttribute('href') === '#' + current) link.style.color = 'var(--color-ink-strong)';
+      link.classList.remove('is-active');
+      if (link.getAttribute('href') === '#' + current) link.classList.add('is-active');
     });
   }
   window.addEventListener('scroll', updateActiveLink);
@@ -149,6 +160,7 @@
   /* ---- Handle Payment Result ---- */
   var params = new URLSearchParams(window.location.search);
   if (params.get('payment') === 'success') {
+    sessionStorage.setItem('curric_paid', '1');
     var successForm = document.getElementById('waitlistForm');
     var successMsg = document.getElementById('waitlistSuccess');
     if (successForm && successMsg) {
@@ -161,6 +173,15 @@
     if (notice) { notice.style.display = 'block'; }
     if (window.history.replaceState) {
       window.history.replaceState({}, '', window.location.pathname);
+    }
+  }
+
+  if (sessionStorage.getItem('curric_paid')) {
+    var paidForm = document.getElementById('waitlistForm');
+    var paidMsg = document.getElementById('waitlistSuccess');
+    if (paidForm && paidMsg) {
+      paidForm.style.display = 'none';
+      paidMsg.classList.add('is-visible');
     }
   }
 

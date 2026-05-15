@@ -2,5 +2,32 @@
   "version": 2,
   "framework": null,
   "outputDirectory": ".",
-  "buildCommand": "cp config.template.js config.js && sed -i \"s|__SUPABASE_URL__|$SUPABASE_URL|g; s|__SUPABASE_ANON_KEY__|$SUPABASE_ANON_KEY|g\" config.js"
+  "buildCommand": "cp config.template.js config.js && sed -i \"s|__SUPABASE_URL__|$SUPABASE_URL|g; s|__SUPABASE_ANON_KEY__|$SUPABASE_ANON_KEY|g\" config.js",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://hvynpslokgslpmekqwmg.supabase.co; frame-src 'none'; object-src 'none'; base-uri 'self'"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        }
+      ]
+    }
+  ]
 }
