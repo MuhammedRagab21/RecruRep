@@ -214,7 +214,30 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name, email: email, country: country }),
       })
-        .then(function (res) {
+        .then(function (res) { return res.json().then(function (data) { return { status: res.status, data: data }; }); })
+        .then(function (result) {
+          submitBtn.classList.remove('btn--loading');
+          submitBtn.textContent = 'Get Beta Access \u2014 ' + PRICE_LABEL;
+
+          if (result.status === 409) {
+            if (result.data.error === 'already_in_waitlist') {
+              alert('You\u2019re already on the list! No need to sign up again.');
+            } else if (result.data.error === 'payment_pending') {
+              alert('A payment is already being processed for this email.');
+            } else {
+              alert(result.data.error || 'Please try again.');
+            }
+            return;
+          }
+
+          if (result.status !== 200 || !result.data.url) {
+            alert('Could not connect to payment. Please try again.');
+            return;
+          }
+
+          window.location.href = result.data.url;
+        });
+          }
           if (!res.ok) throw new Error('Server error');
           return res.json();
         })
@@ -225,10 +248,12 @@
             throw new Error('No checkout URL');
           }
         })
-        .catch(function () {
+        .catch(function (err) {
           submitBtn.classList.remove('btn--loading');
           submitBtn.textContent = 'Get Beta Access \u2014 ' + PRICE_LABEL;
-          alert('Could not connect to payment. Please try again.');
+          if (err.message === 'Server error') {
+            alert('Could not connect to payment. Please try again.');
+          }
         });
     });
   }
