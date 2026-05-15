@@ -204,7 +204,7 @@
 
       fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY },
         body: JSON.stringify({ name: name, email: email, country: country }),
       })
         .then(function (res) { return res.json().then(function (data) { return { status: res.status, data: data }; }); })
