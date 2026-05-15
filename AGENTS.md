@@ -1,6 +1,45 @@
-# Curric
+# Curric / JobHunt Platform
 
-Landing page for a SaaS that helps non-native English teachers find and apply to teaching jobs abroad. Built by two teachers (Moe & Ford) with 6 years of ESL experience in Vietnam.
+## Value Proposition
+
+Curated teaching jobs across Southeast Asia — all subjects, all teacher backgrounds — updated every few days, delivered to your dashboard. A personalized cover letter tailored to each role using advanced AI is drafted for every job you want to apply to, built from your CV and the job description. The platform sends your application for you — you do not lift a finger.
+
+### Problems Solved
+
+1. **Manual searching wastes hours** — LinkedIn, Indeed, Facebook groups: every platform has different filters, different spam. Real jobs buried under duplicates. **Fix:** One consolidated dashboard. No duplicates, no spam, no dead listings.
+
+2. **Non-native teachers face a harder market** — Many roles not visible to non-native speakers. Filtering takes extra time. **Fix:** Filter by eligibility (native/non-native) — see only roles you're actually eligible for.
+
+3. **Cover letters take hours** — Writing tailored cover letters is time-consuming. Most teachers send generic letters or skip applications. **Fix:** Advanced AI writes a personalized cover letter for every job — built from your CV and the job description. Platform sends the application automatically.
+
+4. **Stale listings waste time** — Jobs sitting for weeks unfilled are usually red flags. **Fix:** Any listing older than 30 days is automatically removed.
+
+5. **Process is manual and slow** — Search, filter, write cover letter, copy CV, submit — for every job. **Fix:** Pick the jobs you want. Click a button. Cover letter written, application sent — automatically.
+
+### Who It's For
+
+Native and non-native English speakers. Mathematics, English, Science, Economics, Business, and all other subjects. Teachers based anywhere in the world — you don't need to already be in Southeast Asia. Especially useful for non-native teachers who face bias around nationality, ethnicity, skin color, and religion.
+
+### Founding User Offer — $1.99 for Your First Month
+
+First 15 teachers get full platform access for $1.99. No commitment, no auto-renewal. Priority access to every new feature rollout — one month free per feature. After first month: $19.99/quarter or $50/year.
+
+**Guarantee:** If you don't receive at least one interview invitation within 90 days as an active subscriber, your money back.
+
+### Hormozi Value Equation
+
+**Value = (Dream Outcome × Perceived Likelihood of Achievement) / (Time Delay × Effort & Sacrifice)**
+
+| Variable | Where we are | Score |
+|----------|-------------|-------|
+| **Dream Outcome** | Land a teaching job in SEA without the grind. Real jobs, real schools, real interviews. | High |
+| **Perceived Likelihood** | 90-day money-back guarantee removes risk. Curation removes dead leads. AI cover letters level the playing field for non-native teachers. | High |
+| **Time Delay** | New jobs every 3-5 days. Apply in one click. No waiting for recruiter responses on stale listings. | Medium-High |
+| **Effort & Sacrifice** | Searching done for you. Cover letters written for you. Applications sent for you. From 2+ hours per session to 15 minutes. | Very Low (strong) |
+
+**Result:** High numerator (big dream + believable path), low denominator (fast + nearly zero effort) = high value. The guarantee is the key leverage point — it directly pumps perceived likelihood by eliminating downside risk.
+
+---
 
 ## website/ — Landing Page
 

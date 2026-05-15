@@ -163,9 +163,12 @@
     var successForm = document.getElementById('waitlistForm');
     var successMsg = document.getElementById('waitlistSuccess');
     if (successForm && successMsg) {
-      // Poll spot-count to verify the payment was actually confirmed by the webhook.
-      // The webhook upserts the waitlist entry, so if the user is on the list,
-      // the payment went through. Fall back to "confirming" state if not verified.
+      var successTitle = successMsg.querySelector('.hero__form-success-title');
+      var successText = successMsg.querySelector('.hero__form-success-text');
+      if (!successTitle) successTitle = successMsg;
+      if (!successText) successText = successMsg;
+
+      // Poll spot-count to verify the payment was actually confirmed by the webhook
       var verified = false;
       var checkInterval = setInterval(function() {
         fetch(SUPABASE_URL + '/functions/v1/spot-count', {
@@ -174,34 +177,17 @@
         })
           .then(function(r) { return r.json(); })
           .then(function(data) {
-            var count = data.count || 0;
-            if (count > 0 && !verified) {
+            if ((data.count || 0) > 0 && !verified) {
               verified = true;
               clearInterval(checkInterval);
               successForm.style.display = 'none';
-              successMsg.textContent = 'You’re on the list!';
+              successTitle.textContent = 'You\u2019re on the list!';
+              successText.textContent = 'Your payment is confirmed. Welcome to Curric.';
               successMsg.classList.add('is-visible');
-              loadSpotCount();
-            }
-          })
-          .catch(function() {});
-      }, 2000);
-
-      // Timeout after 15s — show error so user knows to refresh
-      setTimeout(function() {
-        if (!verified) {
-          clearInterval(checkInterval);
-          successForm.style.display = 'none';
-          successMsg.textContent = 'Payment confirmed — check your email for access details, or refresh if you don\'t see it.';
-          successMsg.classList.add('is-visible');
-          loadSpotCount();
-        }
-      }, 15000);
-
-      successForm.style.display = 'none';
-      successMsg.textContent = 'Confirming your payment…';
-      successMsg.classList.add('is-visible');
+      loadSpotCount();
     }
+    // Remember for page refresh
+    sessionStorage.setItem('curric_paid', '1');
     // Clean the URL param so refresh doesn't re-trigger
     if (window.history.replaceState) {
       window.history.replaceState({}, '', window.location.pathname);
@@ -216,10 +202,14 @@
     var paidForm = document.getElementById('waitlistForm');
     var paidMsg = document.getElementById('waitlistSuccess');
     if (paidForm && paidMsg) {
+      var paidTitle = paidMsg.querySelector('.hero__form-success-title');
+      var paidText = paidMsg.querySelector('.hero__form-success-text');
       paidForm.style.display = 'none';
-      paidMsg.textContent = 'You’re on the list!';
+      if (paidTitle) paidTitle.textContent = 'You\u2019re on the list!';
+      if (paidText) paidText.textContent = 'Your payment is confirmed. Welcome to Curric.';
       paidMsg.classList.add('is-visible');
     }
+  }
   }
 
   /* ---- Waitlist Form (Stripe Checkout) ---- */
