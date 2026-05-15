@@ -168,12 +168,8 @@
       successMsg.classList.add('is-visible');
       loadSpotCount();
     }
-  } else if (params.get('payment') === 'cancelled' && !sessionStorage.getItem('curric_cancelled')) {
-    var notice = document.getElementById('cancelledNotice');
-    if (notice) {
-      notice.style.display = 'block';
-      sessionStorage.setItem('curric_cancelled', '1');
-    }
+  } else if (params.get('payment') === 'cancelled') {
+    // Silently clean the URL — user already knows they cancelled
     if (window.history.replaceState) {
       window.history.replaceState({}, '', window.location.pathname);
     }
@@ -202,9 +198,6 @@
       if (!name) { alert('Please enter your name.'); return; }
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email address.'); return; }
       if (!country) { alert('Please select your country.'); return; }
-
-      var cn = document.getElementById('cancelledNotice');
-      if (cn) { cn.style.display = 'none'; }
 
       submitBtn.classList.add('btn--loading');
       submitBtn.textContent = 'Opening checkout...';
