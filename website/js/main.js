@@ -170,7 +170,6 @@
       if (!successTitle) successTitle = successMsg;
       if (!successText) successText = successMsg;
 
-      // Poll spot-count to verify the payment was actually confirmed by the webhook
       var verified = false;
       var checkInterval = setInterval(function() {
         fetch(SUPABASE_URL + '/functions/v1/spot-count', {
@@ -186,11 +185,13 @@
               successTitle.textContent = 'You\u2019re on the list!';
               successText.textContent = 'Your payment is confirmed. Welcome to Curric.';
               successMsg.classList.add('is-visible');
-      loadSpotCount();
+              loadSpotCount();
+            }
+          })
+          .catch(function() {});
+      }, 1000);
     }
-    // Remember for page refresh
     sessionStorage.setItem('curric_paid', '1');
-    // Clean the URL param so refresh doesn't re-trigger
     if (window.history.replaceState) {
       window.history.replaceState({}, '', window.location.pathname);
     }
@@ -211,7 +212,6 @@
       if (paidText) paidText.textContent = 'Your payment is confirmed. Welcome to Curric.';
       paidMsg.classList.add('is-visible');
     }
-  }
   }
 
   /* ---- Waitlist Form (Stripe Checkout) ---- */
