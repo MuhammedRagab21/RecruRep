@@ -3,6 +3,12 @@
   "framework": null,
   "outputDirectory": ".",
   "buildCommand": "cp config.template.js config.js && sed -i \"s|__SUPABASE_URL__|$SUPABASE_URL|g; s|__SUPABASE_ANON_KEY__|$SUPABASE_ANON_KEY|g\" config.js",
+  "rewrites": [
+    {
+      "source": "/api/auth/delete-account",
+      "destination": "https://hvynpslokgslpmekqwmg.supabase.co/functions/v1/delete-account"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
